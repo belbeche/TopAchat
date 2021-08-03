@@ -2,9 +2,10 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Product;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class IndexController extends AbstractController
 {
@@ -13,9 +14,11 @@ class IndexController extends AbstractController
      */
     public function index(): Response
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        
+        $repository = $this->getDoctrine()->getRepository(Product::class);
+        $product = $repository->findAll();
 
-        return $this->render('index/index.html.twig');
+        return $this->render('index/index.html.twig', [
+            'products' => $product
+        ]);
     }
 }

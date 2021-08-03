@@ -18,8 +18,45 @@
 			</section>
 		</div>
 	</div>
-    <div class="container">
-        <h1>Produits</h1>
-        
-    </div>
+	<div class="container">
+		<h1>Produits</h1>
+
+
+		<div class="card container">
+			<div class="row">
+				{% for product in products %}
+					<div class="col-md-4">
+						<div class="card h-100 shadow-sm">
+							<img src="https://www.freepnglogos.com/uploads/notebook-png/download-laptop-notebook-png-image-png-image-pngimg-2.png" class="card-img-top" alt="...">
+							<div class="label-top shadow-sm">{{ product.category.name }}</div>
+							<div class="card-body">
+								<div class="clearfix mb-3">
+									<span class="float-start badge rounded-pill bg-success">{{ product.price }}
+										€</span>
+									<span class="float-end">
+										<a href="#" class="small text-muted">{{ product.name }}</a>
+									</span>
+								</div>
+								<h5 class="card-title">{{ product.commentaires }}.</h5>
+								<div class="text-center my-4">
+									<a href="#" class="btn btn-warning">Voir produit</a>
+								</div>
+								<div class="clearfix mb-1">
+									<span class="float-start">
+										<i class="far fa-question-circle"></i>
+									</span>
+									<span class="float-end">
+										<i class="fas fa-plus"></i>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+		{# {{ product.date_fin_garantie|date("m/d/Y") }} #}
+
+
+	</div>
 {% endblock %}

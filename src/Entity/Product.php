@@ -57,6 +57,12 @@ class Product
      */
     private $category;
 
+    public function __construct()
+    {
+        $this->datetime = new \DateTime;
+        $this->date_fin_garantie = new \DateTime;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
