@@ -38,6 +38,10 @@ class Category
     {
         $this->category_id = new ArrayCollection();
     }
+    public function __toString()
+    {
+        return $this->category_id;
+    }
 
     public function getId(): ?int
     {

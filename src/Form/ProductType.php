@@ -3,10 +3,12 @@
 namespace App\Form;
 
 use App\Entity\Product;
+use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class ProductType extends AbstractType
 {
@@ -19,7 +21,11 @@ class ProductType extends AbstractType
             ->add('date_fin_garantie')
             ->add('commentaires')
             ->add('manuel')
-            ->add('category');
+            ->add('category', ChoiceType::class, [
+                'choices' => [
+                    new Category('store')
+                ]
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

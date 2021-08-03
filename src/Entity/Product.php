@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
+use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
@@ -23,7 +25,7 @@ class Product
     private $name;
 
     /**
-     * @Assert\DateTime
+     * @ORM\Column(type="datetime")
      */
     private $datetime;
 
@@ -33,7 +35,7 @@ class Product
     private $price;
 
     /**
-     * @Assert\DateTime
+     * @ORM\Column(type="datetime")
      */
     private $date_fin_garantie;
 
@@ -48,7 +50,10 @@ class Product
     private $manuel;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="category_id",cascade={"persist"})
+     * @ORM\ManyToOne(
+     * targetEntity=Category::class, inversedBy="category_id",
+     * cascade={"persist"}
+     * )
      */
     private $category;
 
