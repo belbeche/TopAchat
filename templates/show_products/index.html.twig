@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+	{{ product.name }}
+	{{ product.datetime|date('Y-m-d H:i:s') }}
+	{{ product.price }}
+	{{ product.commentaires }}
+	{{ product.manuel }}
+	{{ product.category.name }}
+
+{% endblock %}
