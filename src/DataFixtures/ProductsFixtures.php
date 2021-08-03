@@ -25,8 +25,7 @@ class ProductsFixtures extends Fixture
             $product[$i]->setDateFinGarantie(new \DateTime());
             $product[$i]->setCommentaires($faker->realText);
             $product[$i]->setManuel($faker->boolean);
-            $product[$i]->setCategory(new Category($faker->title), '', '');
-
+            $product[$i]->setCategory($category->setName);
             $manager->persist($product[$i]);
         }
 

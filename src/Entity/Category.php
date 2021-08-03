@@ -34,12 +34,21 @@ class Category
      */
     private $store;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
+
     public function __construct()
     {
         $this->category_id = new ArrayCollection();
     }
+
     public function __toString()
     {
+        if (is_null($this->category_id)) {
+            return 'NULL';
+        }
         return $this->category_id;
     }
 
@@ -98,6 +107,18 @@ class Category
     public function setStore(string $store): self
     {
         $this->store = $store;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }

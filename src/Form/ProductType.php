@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class ProductType extends AbstractType
 {
@@ -21,11 +22,7 @@ class ProductType extends AbstractType
             ->add('date_fin_garantie')
             ->add('commentaires')
             ->add('manuel')
-            ->add('category', ChoiceType::class, [
-                'choices' => [
-                    new Category('store')
-                ]
-            ]);
+            ->add('category', ChoiceType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)
