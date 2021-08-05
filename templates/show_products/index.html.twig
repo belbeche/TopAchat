@@ -4,28 +4,39 @@
 
 {% block body %}
 
-	<div class="container">
+	<div class="container" style="margin-top:20px;">
 		<div class="row">
-			<div class="col-md-6" style="background-color:white;border-radius: 10px;">
-				<div class="jumbotron jumbotron-fluid">
-					<div class="container">
-						<h1 class="display-4">{{ product.name }}</h1>
-						<p class="lead">{{ product.commentaires }}</p>
-						<div class="card-img-top">
-							<img src="/images/products/{{ product.filename }}" style="width:100%;height:auto;">
-						</div>
-					</div>
+			<div class="col-md-6" style="background-color:white;border-radius: 10px;height:50em;">
+				<img src="/images/products/{{ product.filename }}" style="width:100%;height:auto;">
+				<hr>
+				<div class="col-md-3" style="float:right;">
+					<i class="fas fa-map-marked-alt"></i>
+					{{ product.lieu }}<br>
+					<i class="fas fa-euro-sign"></i>
+					{{ product.price  }}
 				</div>
+				<h1 class="display-4">{{ product.name }}</h1>
+				<p class="lead">{{ product.commentaires }}</p>
+				<p>
+					<i class="far fa-calendar-alt"></i>
+					{{ product.datetime|date('d-m-Y') }}
+					à
+					{{ product.datetime|date('H:i:s') }}
+				</p>
+				<p>
+					<i class="fas fa-calendar-times"></i>
+					{{ product.datefingarantie|date('d-m-Y') }}
+					à
+					{{ product.datefingarantie|date('H:i:s') }}
+				</p>
+				<p>
+					<i class="fas fa-barcode"></i>
+					{{ product.category.name }}
+				</p>
 			</div>
-			<div class="col-md-6"></div>
+
 		</div>
 	</div>
 
-
-	{{ product.datetime|date('Y-m-d H:i:s') }}
-	{{ product.price }}
-
-	{{ product.manuel }}
-	{{ product.category.name }}
 
 {% endblock %}
