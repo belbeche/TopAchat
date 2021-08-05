@@ -4,50 +4,77 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container">
-		<div class="jumbotron">
-			<section class="py-5">
-				<div class="container">
-					<h1 class="fw-light">Bienvenue sur TopAchat</h1>
-					<p class="lead">Votre utilisataire de gestion de matériels de confiance
-						<strong>simple,rapide,et efficace !</strong>
 
-						<a href="{{path('product_index')}}">Voir mon bizness</a>
-						!</p>
+	<main>
+		{% if not app.user %}
+			<section class="py-5 text-center container">
+				<div class="row py-lg-5">
+					<div class="col-lg-6 col-md-8 mx-auto">
+						<h1 class="fw-light">Bienvenue sur TopAchat</h1>
+						<p class="lead text-muted">Votre service de gestion de matériels de confiance.</p>
+						<p class="lead text-muted">simple,rapide,et efficace !</p>
+						<p>
+							<a href="{{ path('app_login') }}" class="btn btn-primary my-2">Connexion</a>
+							<a href="#" class="btn btn-secondary my-2">Inscription</a>
+						</p>
+					</div>
 				</div>
 			</section>
-		</div>
-	</div>
-	<div class="container">
-		<h1>Produits</h1>
+		{% else %}
+			<section class="py-5 text-center container">
+				<div class="row py-lg-5">
+					<div class="col-lg-6 col-md-8 mx-auto">
+						<h1 class="fw-light">Connecté sous :
+							{{ app.user.username }}</h1>
+						<p>
+							<hr>
+							<a href="{{path('product_index')}}">Voir mon bizness</a>
+						</p>
+					</p>
+				</div>
+			</div>
+		</section>
+	{% endif %}
 
-
-		<div class="card container">
-			<div class="row">
+	<div class="album py-5 bg-light">
+		<div class="container">
+			<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 				{% for product in products %}
-					<div class="col-md-4">
-						<div class="card h-100 shadow-sm">
-							<img src="https://www.freepnglogos.com/uploads/notebook-png/download-laptop-notebook-png-image-png-image-pngimg-2.png" class="card-img-top" alt="...">
-							<div class="label-top shadow-sm">{{ product.category.name }}</div>
+					<div class="col">
+						<div class="card shadow-sm">
+							{% if product.filename %}
+								<a href="/images/products/{{ product.filename }}"><img src="/images/products/{{ product.filename }}" class="card-img-top" style="width: 100%;height:auto;"></a>
+							{% endif %}
+
 							<div class="card-body">
-								<div class="clearfix mb-3">
-									<span class="float-start badge rounded-pill bg-success">{{ product.price }}
-										€</span>
-									<span class="float-end">
-										<a href="#" class="small text-muted">{{ product.name }}</a>
-									</span>
-								</div>
-								<h5 class="card-title">{{ product.commentaires }}.</h5>
-								<div class="text-center my-4">
-									<a href="{{path('show_products', {id: product.id})}}" class="btn btn-warning">Voir produit</a>
-								</div>
-								<div class="clearfix mb-1">
-									<span class="float-start">
-										<i class="far fa-question-circle"></i>
-									</span>
-									<span class="float-end">
-										<i class="fas fa-plus"></i>
-									</span>
+								<h5 class="card-title">
+									Produit:
+									{{ product.name }}</h5>
+								<small>
+									<i class="far fa-calendar-alt"></i>
+									{{ product.datetime|date('d-m-Y')}}
+									à
+									{{ product.datetime|date('H:i:s') }}
+								</small>
+								<br>
+								<small>
+									<i class="fas fa-calendar-times"></i>
+									{{ product.datefingarantie|date('d-m-Y') }}
+									à
+									{{ product.datefingarantie|date('H:i:s') }}</small>
+								<p class=" text-muted">
+									<i class="fas fa-barcode"></i>
+									{{ product.category.name}}</p>
+								<p class="card-text">{{ product.commentaires }}</p>
+								<hr>
+								<p class=" text-muted">
+									<i class="fas fa-map-marked-alt"></i>
+									{{ product.lieu }}</p>
+								<div class="d-flex justify-content-between align-items-center">
+									<div class="btn-group">
+										<a href="{{path('show_products', {id: product.id})}}" class="btn btn-warning">Voir produit</a>
+										<button type="button" class="btn btn-sm btn-outline-secondary">Favoris</button>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -55,8 +82,6 @@
 				{% endfor %}
 			</div>
 		</div>
-		{# {{ product.date_fin_garantie|date("m/d/Y") }} #}
-
-
 	</div>
-{% endblock %}
+
+</main>{% endblock %}

@@ -26,7 +26,10 @@ class ProductsFixtures extends Fixture
             $product[$i]->setCommentaires($faker->realText);
             $product[$i]->setManuel($faker->boolean);
             $product[$i]->setCategory($category);
+            $product[$i]->setFilename($faker->imageUrl);
             $category->setName($faker->name);
+            $product[$i]->setLieu($faker->name);
+            $product[$i]->setUpdatedAt(new \DateTime('now'));
             $manager->persist($product[$i]);
         }
 

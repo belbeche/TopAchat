@@ -25,16 +25,6 @@ class Category
     private $category_id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $images;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $store;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $name;
@@ -83,30 +73,6 @@ class Category
                 $categoryId->setCategory(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getImages(): ?string
-    {
-        return $this->images;
-    }
-
-    public function setImages(string $images): self
-    {
-        $this->images = $images;
-
-        return $this;
-    }
-
-    public function getStore(): ?string
-    {
-        return $this->store;
-    }
-
-    public function setStore(string $store): self
-    {
-        $this->store = $store;
 
         return $this;
     }

@@ -4,43 +4,50 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Product index</h1>
+	<div class="container" style="margin-top: 20px;">
 
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Réference client</th>
-				<th>Produit</th>
-				<th>Date</th>
-				<th>Prix</th>
-				<th>Date_fin_garantie</th>
-				<th>Commentaires</th>
-				<th>Manuel</th>
-				<th>actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for product in products %}
-				<tr>
-					<td>{{ product.id }}</td>
-					<td>{{ product.name }}</td>
-					<td>{{ product.datetime ? product.datetime|date('Y-m-d H:i:s') : '' }}</td>
-					<td>{{ product.price }}</td>
-					<td>{{ product.dateFinGarantie ? product.dateFinGarantie|date('Y-m-d H:i:s') : '' }}</td>
-					<td>{{ product.commentaires }}</td>
-					<td>{{ product.manuel ? 'Yes' : 'No' }}</td>
-					<td>
-						<a href="{{ path('product_show', {'id': product.id}) }}">show</a>
-						<a href="{{ path('product_edit', {'id': product.id}) }}">edit</a>
-					</td>
-				</tr>
+		{% if app.user %}
+			<h5>Actuellement connecté sous :</h5>
+			<small>{{ app.user.username }}</small>
 			{% else %}
-				<tr>
-					<td colspan="8">no records found</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
 
-	<a href="{{ path('product_new') }}" class="btn btn-info">Nouveau produit</a>
+		{% endif %}
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Réference client</th>
+					<th>Produit</th>
+					<th>Date</th>
+					<th>Prix</th>
+					<th>Date_fin_garantie</th>
+					<th>Commentaires</th>
+					<th>Manuel</th>
+					<th>actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for product in products %}
+					<tr>
+						<td>{{ product.id }}</td>
+						<td>{{ product.name }}</td>
+						<td>{{ product.datetime ? product.datetime|date('Y-m-d H:i:s') : '' }}</td>
+						<td>{{ product.price }}</td>
+						<td>{{ product.dateFinGarantie ? product.dateFinGarantie|date('Y-m-d H:i:s') : '' }}</td>
+						<td>{{ product.commentaires }}</td>
+						<td>{{ product.manuel ? 'Inclus' : 'Non' }}</td>
+						<td>
+							<a href="{{ path('product_show', {'id': product.id}) }}" class="btn btn-secondary">Voir</a>
+							<a href="{{ path('product_edit', {'id': product.id}) }}" class=" btn btn-primary">Modifier</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="8">Aucune annonce trouvée(s)</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<a href="{{ path('product_new') }}" class="btn btn-info">Nouveau produit</a>
+	</div>
 {% endblock %}

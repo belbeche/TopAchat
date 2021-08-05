@@ -4,10 +4,27 @@
 
 {% block body %}
 
-	{{ product.name }}
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6" style="background-color:white;border-radius: 10px;">
+				<div class="jumbotron jumbotron-fluid">
+					<div class="container">
+						<h1 class="display-4">{{ product.name }}</h1>
+						<p class="lead">{{ product.commentaires }}</p>
+						<div class="card-img-top">
+							<img src="/images/products/{{ product.filename }}" style="width:100%;height:auto;">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6"></div>
+		</div>
+	</div>
+
+
 	{{ product.datetime|date('Y-m-d H:i:s') }}
 	{{ product.price }}
-	{{ product.commentaires }}
+
 	{{ product.manuel }}
 	{{ product.category.name }}
 
