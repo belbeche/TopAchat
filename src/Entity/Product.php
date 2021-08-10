@@ -43,7 +43,7 @@ class Product
     /**
      * @ORM\Column(type="datetime")
      */
-    private $datetime;
+    private $createdAt;
 
     /**
      * @ORM\Column(type="integer")
@@ -87,7 +87,7 @@ class Product
 
     public function __construct()
     {
-        $this->datetime = new \DateTime;
+        $this->createdAt = new \DateTime;
         $this->date_fin_garantie = new \DateTime;
     }
 
@@ -110,12 +110,12 @@ class Product
 
     public function getDatetime(): ?\DateTimeInterface
     {
-        return $this->datetime;
+        return $this->createdAt;
     }
 
-    public function setDatetime(\DateTimeInterface $datetime): self
+    public function setDatetime(\DateTimeInterface $createdAt): self
     {
-        $this->datetime = $datetime;
+        $this->createdAt = $createdAt;
 
         return $this;
     }

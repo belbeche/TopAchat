@@ -36,7 +36,13 @@
 			</tr>
 			<tr>
 				<th>Manuel</th>
-				<td>{{ product.manuel ? 'Yes' : 'No' }}</td>
+				<td>{{ product.manuel ? 'Inclus' : 'Non' }}</td>
+			</tr>
+			<tr>
+				<th>Image</th>
+				{% if product.filename %}
+					<a href="/images/products/{{ product.filename }}"><img src="/images/products/{{ product.filename }}" class="card-img-top" style="width:100%;height:100%;"></a>
+				{% endif %}
 			</tr>
 		</tbody>
 	</table>

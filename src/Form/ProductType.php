@@ -21,9 +21,14 @@ class ProductType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('datetime', DateTimeType::class)
+            ->add('createdAt', DateTimeType::class, [
+                'date_label' => 'Date de création',
+                'mapped' => false,
+            ])
             ->add('price')
-            ->add('date_fin_garantie')
+            ->add('date_fin_garantie', DateTimeType::class, [
+                'date_label' => 'Date fin Garantie',
+            ])
             ->add('commentaires')
             ->add('manuel')
             ->add('category', EntityType::class, [
