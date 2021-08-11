@@ -1,0 +1,34 @@
+{{ form_start(form)}}
+
+{{ form_end(form) }}
+
+{% for product in products %}
+				<div class="col-md-6">
+
+					<div class="card shadow-sm">
+						
+						<div class="card-body">
+							<h5 class="card-title">
+								</h5>
+							<small>
+								
+								
+							</small>
+							<br>
+							
+							
+							<hr>
+							<p class=" text-muted">
+								<i class="fas fa-map-marked-alt"></i>
+								{{ product.lieu }}</p>
+							<div class="d-flex justify-content-between align-items-center">
+								<div class="btn-group">
+									<a href="{{path('show_products', {id: product.id})}}" class="btn btn-warning">Voir produit</a>
+									
+
+								</div>
+							</div>
+						</div>
+
+					</div>
+				{% endfor %}

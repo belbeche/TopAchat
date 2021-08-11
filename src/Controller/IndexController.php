@@ -2,27 +2,76 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
+
+
 use App\Entity\Product;
-use App\Form\UserFormType;
+use App\Form\ProductType;
+use App\Repository\ProductRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 
 class IndexController extends AbstractController
 {
     /**
      * @Route("/", name="index")
      */
-    public function index(Request $request): Response
+    public function index(ProductRepository $productRepo, Request  $request, PaginatorInterface $paginator): Response
     {
-        $repository = $this->getDoctrine()->getRepository(Product::class);
-        $product = $repository->findAll();
+        // Formulaire de recherche 
+        // $data = new SearchData();
 
+        // $form = $this->createForm(SearchForm::class, $data);
+        // $form->handleRequest($request);
+
+        $product = $paginator->paginate(
+            $productRepo->findAll(),
+            $request->query->getInt('page', 1),
+            8
+        );
 
         return $this->render('index/index.html.twig', [
-            'products' => $product
+            'products' => $product,
+            // 'form' => $form->createView(),
+        ]);
+    }
+    /**
+     * @Route("addFavoris/{id}", name="addFavoris")
+     *
+     * @return objet
+     */
+    public function addFavoris($id, Request $request)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $product = $entityManager->getRepository(Product::class)->find($id);
+
+        if (!$product) {
+            throw $this->createNotFoundException(
+                'Erreur 404 : Annonce not found for : id : ' . $id
+            );
+        }
+
+        $product->setFavoris($id);
+
+        $entityManager->persist($product);
+        $entityManager->flush();
+
+        // $favoris = new Product();
+        // $favoris->setFavoris($id, $request);
+        // $form = $this->createForm(ProductType::class, $favoris);
+
+        // $form->handleRequest($request);
+
+        // if ($form->isSubmitted() && $form->isValid()) {
+        //     $favoris = $form->getData();
+        //     $entityManager = $this->getDoctrine()->getManager();
+        //     $entityManager->persist($favoris);
+        //     $entityManager->flush();
+        // }
+        return $this->redirectToRoute('index', [
+            'id' => $product->getId()
         ]);
     }
 }

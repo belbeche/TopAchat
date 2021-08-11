@@ -29,6 +29,11 @@ class Category
      */
     private $name;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="categories")
+     */
+    private $products;
+
     public function __construct()
     {
         $this->category_id = new ArrayCollection();
@@ -85,6 +90,18 @@ class Category
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getProducts(): ?Product
+    {
+        return $this->products;
+    }
+
+    public function setProducts(?Product $products): self
+    {
+        $this->products = $products;
 
         return $this;
     }

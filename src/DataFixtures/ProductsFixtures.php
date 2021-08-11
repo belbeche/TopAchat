@@ -29,7 +29,8 @@ class ProductsFixtures extends Fixture
             $product[$i]->setFilename($faker->imageUrl);
             $category->setName($faker->name);
             $product[$i]->setLieu($faker->name);
-            $product[$i]->setUpdatedAt(new \DateTime('now'));
+            $product[$i]->setUpdatedAt(new \DateTimeImmutable());
+            $product[$i]->setFavoris($faker->numberBetween(-1, 1));
             $manager->persist($product[$i]);
         }
 

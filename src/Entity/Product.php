@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
@@ -63,7 +64,7 @@ class Product
     /**
      * @ORM\Column(type="boolean")
      */
-    private $manuel;
+    private $manuel = 0;
 
     /**
      * @ORM\ManyToOne(
@@ -85,10 +86,21 @@ class Product
      */
     private $updated_at;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $favoris;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Category::class, mappedBy="products")
+     */
+    private $categories;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime;
-        $this->date_fin_garantie = new \DateTime;
+        // $this->date_fin_garantie = new \DateTime;
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -250,6 +262,48 @@ class Product
     public function setUpdatedAt(\DateTimeImmutable $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    public function getFavoris(): ?bool
+    {
+        return $this->favoris;
+    }
+
+    public function setFavoris(bool $favoris): self
+    {
+        $this->favoris = $favoris;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+            $category->setProducts($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        if ($this->categories->removeElement($category)) {
+            // set the owning side to null (unless already changed)
+            if ($category->getProducts() === $this) {
+                $category->setProducts(null);
+            }
+        }
 
         return $this;
     }

@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class ProductType extends AbstractType
 {
@@ -38,6 +39,10 @@ class ProductType extends AbstractType
             ])
             ->add('lieu', TextType::class)
             ->add('imageFile', FileType::class, [
+                'required' => false,
+                'multiple' => true,
+            ])
+            ->add('favoris', CheckboxType::class, [
                 'required' => false,
             ]);
     }

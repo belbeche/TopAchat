@@ -33,9 +33,9 @@
 					<tr>
 						<td>{{ product.id }}</td>
 						<td>{{ product.name }}</td>
-						<td>{{ product.datetime ? product.datetime|date('Y-m-d H:i:s') : '' }}</td>
+						<td>{{ product.datetime ? product.datetime|date('d-m-Y H:i:s') : '' }}</td>
 						<td>{{ product.price }}</td>
-						<td>{{ product.dateFinGarantie ? product.dateFinGarantie|date('Y-m-d H:i:s') : '' }}</td>
+						<td>{{ product.dateFinGarantie ? product.dateFinGarantie|date('d-m-Y H:i:s') : '' }}</td>
 						<td>{{ product.commentaires }}</td>
 						<td>
 							{% if product.filename %}
