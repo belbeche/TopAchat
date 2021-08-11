@@ -33,7 +33,7 @@ class IndexController extends AbstractController
         $product = $paginator->paginate(
             $productRepo->findAll(),
             $request->query->getInt('page', 1),
-            8
+            4
         );
 
         return $this->render('index/index.html.twig', [
