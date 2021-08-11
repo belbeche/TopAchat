@@ -6,12 +6,14 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Form\ProductType;
+use Cocur\Slugify\Slugify;
 use App\Repository\ProductRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 
 class IndexController extends AbstractController
 {
@@ -25,6 +27,8 @@ class IndexController extends AbstractController
 
         // $form = $this->createForm(SearchForm::class, $data);
         // $form->handleRequest($request);
+        $slugify = new Slugify();
+        $slugify->slugify('Hello World!'); // hello-world
 
         $product = $paginator->paginate(
             $productRepo->findAll(),
@@ -34,6 +38,7 @@ class IndexController extends AbstractController
 
         return $this->render('index/index.html.twig', [
             'products' => $product,
+            'slug' => $slugify
             // 'form' => $form->createView(),
         ]);
     }

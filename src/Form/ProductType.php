@@ -38,9 +38,8 @@ class ProductType extends AbstractType
                 'multiple' => false
             ])
             ->add('lieu', TextType::class)
-            ->add('imageFile', FileType::class, [
+            ->add('thumbnailFile', FileType::class, [
                 'required' => false,
-                'multiple' => true,
             ])
             ->add('favoris', CheckboxType::class, [
                 'required' => false,

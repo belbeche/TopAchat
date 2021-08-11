@@ -55,6 +55,7 @@
 e.preventDefault();
 let email = $('#email').val();
 let password = $('#password').val();
+let favoris = $('.favoris').val();
 let data = JSON.stringify({email: email, password: password});
 $.ajax({
 url: '{{ path('api_login') }}',
@@ -98,17 +99,20 @@ return data;
 					<div class="col-lg-3 col-md-4 col-sm-6 mix">
 						<div class="car__item">
 							<div class="car__item__pic__slider owl-carousel">
-								{% if product.filename %}
-									<a href="/images/products/{{ product.filename }}"><img src="/images/products/{{ product.filename }}" class="card-img-top" style="width: 100%;height:auto;"></a>
+								{% if product.thumbnail %}
+									<a href="/images/products/{{ product.thumbnail }}"><img src="/images/products/{{ product.thumbnail }}" class="card-img-top" style="width: 100%;height:auto;"></a>
 								{% endif %}
 							</div>
 							<div class="car__item__text">
 								<div class="car__item__text__inner">
 									<div class="label-date">
-										<i class="far fa-calendar-alt"></i>
-										{{ product.datetime|date('d-m-Y')}}
-										à
-										{{ product.datetime|date('H:i:s') }}
+										<small>
+											<i class="far fa-calendar-alt"></i>
+											{{ product.datetime|date('d-m-Y')}}
+											à
+											{{ product.datetime|date('H:i:s') }}
+										</small>
+										<br>
 										<small>
 											<i class="fas fa-calendar-times"></i>
 											{{ product.datefingarantie|date('d-m-Y') }}
