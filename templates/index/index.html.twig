@@ -55,7 +55,6 @@
 e.preventDefault();
 let email = $('#email').val();
 let password = $('#password').val();
-let favoris = $('.favoris').val();
 let data = JSON.stringify({email: email, password: password});
 $.ajax({
 url: '{{ path('api_login') }}',
@@ -78,7 +77,7 @@ return data;
 							{{ app.user.username }}</h5>
 						<p>
 							<hr>
-							<a href="{{path('product_index')}}">Voir mon bizness</a>
+							<a href="{{path('product_index')}}" class="btn btn-danger">Voir mon bizness</a>
 						</p>
 					</p>
 				</div>
@@ -131,18 +130,20 @@ return data;
 												{{ product.category.name}}</p>
 										</li>
 										<li>
+											<span>{{ product.price | number_format(0, ',', ' ') }}€
+											</span>
+										</li>
+										<li>
 											<p class="card-text">{{ product.commentaires }}</p>
 										</li>
 									</ul>
 								</div>
 								<div class="car__item__price">
-									<span class="car-option">
+									<span>
 										{% if product.favoris %}
-											<span class="car-option">En Favoris</span>
+											<a href="{{ path('remove_favoris', {id: product.id}) }}" class="btn btn-danger">En favoris</a>
 										{% else %}
-											<a href="{{path('addFavoris', {id: product.id})}}">
-												<span class="car-option">Ajouté</span>
-											</a>
+											<a href="{{ path('addFavoris', {id: product.id}) }}" class="btn btn-secondary">Ajouter aux favoris</a>
 										{% endif %}
 									</span>
 								</div>

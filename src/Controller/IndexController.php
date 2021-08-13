@@ -58,7 +58,7 @@ class IndexController extends AbstractController
             );
         }
 
-        $product->setFavoris($id);
+        $product->setFavoris(true);
 
         $entityManager->persist($product);
         $entityManager->flush();
@@ -77,6 +77,23 @@ class IndexController extends AbstractController
         // }
         return $this->redirectToRoute('index', [
             'id' => $product->getId()
+        ]);
+    }
+    /**
+     * @Route("/remove/favoris/{id}", name="remove_favoris", requirements={"id":"\d+"})
+     *
+     * @return remove
+     */
+    public function removeFavoris($id, Product $product): Response
+    {
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($product->setFavoris(false));
+        $entityManager->flush();
+
+
+        return $this->redirectToRoute('index', [
+            'id' => $product->getId($id)
         ]);
     }
 }

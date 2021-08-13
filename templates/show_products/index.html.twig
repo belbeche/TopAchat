@@ -34,7 +34,19 @@
 					{{ product.category.name }}
 				</p>
 			</div>
-
+			<div class="col-md-6">
+				<div class="car__item__price">
+					<span>
+						{% if product.favoris %}
+							<a class="btn btn-success">Favoris</a>
+						{% else %}
+							<a href="{{path('addFavoris', {id: product.id})}}" class="btn btn-secondary">
+								Ajouter aux favoris
+							</a>
+						{% endif %}
+					</span>
+				</div>
+			</div>
 		</div>
 	</div>
 

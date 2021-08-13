@@ -1,4 +1,16 @@
 {
+    "antishov/doctrine-extensions-bundle": {
+        "version": "1.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.4",
+            "ref": "6c1ceb662f8997085f739cd089bfbef67f245983"
+        },
+        "files": [
+            "./config/packages/stof_doctrine_extensions.yaml"
+        ]
+    },
     "api-platform/api-pack": {
         "version": "v1.3.0"
     },
@@ -15,6 +27,9 @@
             "./config/routes/api_platform.yaml",
             "./src/Entity/.gitignore"
         ]
+    },
+    "behat/transliterator": {
+        "version": "v1.3.0"
     },
     "cocur/slugify": {
         "version": "v4.0.0"
@@ -128,6 +143,9 @@
     },
     "fzaninotto/faker": {
         "version": "v1.9.2"
+    },
+    "gedmo/doctrine-extensions": {
+        "version": "v3.1.0"
     },
     "hautelook/alice-bundle": {
         "version": "2.1",

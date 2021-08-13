@@ -31,7 +31,9 @@ class ProductType extends AbstractType
                 'date_label' => 'Date fin Garantie',
             ])
             ->add('commentaires')
-            ->add('manuel')
+            ->add('manuel', CheckboxType::class, [
+                'required' => false,
+            ])
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name',
@@ -50,6 +52,7 @@ class ProductType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Product::class,
+            'validation_groups' => false,
         ]);
     }
 }

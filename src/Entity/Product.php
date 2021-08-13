@@ -2,14 +2,16 @@
 
 namespace App\Entity;
 
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Cocur\Slugify\Slugify;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 
 /**
@@ -84,7 +86,7 @@ class Product
     /**
      * @ORM\Column(type="boolean")
      */
-    private $favoris;
+    private $favoris = false;
 
     /**
      * @ORM\OneToMany(targetEntity=Category::class, mappedBy="products")
@@ -92,30 +94,27 @@ class Product
     private $categories;
 
     /**
+     * @Gedmo\Slug(fields={"name"})
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $thumbnail;
 
-    public function getThumbNailFile()
-    {
-        return $this->thumbnailFile;
-    }
+    // public function getThumbNailFile()
+    // {
+    //     return $this->thumbnailFile;
+    // }
 
-    public function setThumbnailFile(File $image, $thumbnailFile)
+    public function setThumbnailFile(?File $thumbnailFile = null): void
     {
-        $this->thumbnailFile = $image;
+        $this->thumbnailFile = $thumbnailFile;
 
-        // VERY IMPORTANT:
-        // It is required that at least one field changes if you are using Doctrine,
-        // otherwise the event listeners won't be called and the file is lost
-        if ($image) {
-            // if 'updatedAt' is not defined in your entity, use another property
-            $this->updatedAt = new \DateTime('now');
+        if ($this->thumbnailFile instanceof UploadedFile) {
+            $this->updated_at = new \DateTime('now');
         }
     }
 
@@ -286,19 +285,12 @@ class Product
         return $this->slug;
     }
 
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
     public function getThumbnail(): ?string
     {
         return $this->thumbnail;
     }
 
-    public function setThumbnail(string $thumbnail): self
+    public function setThumbnail(string $thumbnail = null): self
     {
         $this->thumbnail = $thumbnail;
 
@@ -307,6 +299,6 @@ class Product
 
     public function __tooString()
     {
-        return $this->thumbnail;
+        return $this->name;
     }
 }
