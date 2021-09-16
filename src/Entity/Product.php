@@ -2,16 +2,17 @@
 
 namespace App\Entity;
 
+use App\Entity\User;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ProductRepository;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 
 /**
@@ -39,6 +40,7 @@ class Product
     private $name;
 
     /**
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
@@ -145,13 +147,6 @@ class Product
     public function getDatetime(): ?\DateTimeInterface
     {
         return $this->createdAt;
-    }
-
-    public function setDatetime(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
     }
 
     public function getPrice(): ?int
@@ -300,5 +295,18 @@ class Product
     public function __tooString()
     {
         return $this->name;
+    }
+    /**
+     * Functions qui reconnais les likes by Users
+     *
+     * @param User $user
+     * @return boolean
+     */
+    public function isFavourite(User $user): bool
+    {
+        foreach ($user as $like) {
+            if ($like->getUser() === $user) return true;
+        }
+        return false;
     }
 }

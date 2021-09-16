@@ -15,18 +15,24 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 
 class ProductType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
+            ->add('name', TextType::class, [
+                'label' => 'Nom du produit'
+            ])
             ->add('createdAt', DateTimeType::class, [
                 'date_label' => 'Date de création',
                 'mapped' => false,
+                'label' => 'Date de création'
             ])
-            ->add('price')
+            ->add('price', MoneyType::class, [
+                'divisor' => 100,
+            ])
             ->add('date_fin_garantie', DateTimeType::class, [
                 'date_label' => 'Date fin Garantie',
             ])
@@ -42,6 +48,7 @@ class ProductType extends AbstractType
             ->add('lieu', TextType::class)
             ->add('thumbnailFile', FileType::class, [
                 'required' => false,
+                'label' => 'image'
             ])
             ->add('favoris', CheckboxType::class, [
                 'required' => false,

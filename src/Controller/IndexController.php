@@ -4,10 +4,14 @@ namespace App\Controller;
 
 
 
+use App\Entity\Favoris;
 use App\Entity\Product;
 use App\Form\ProductType;
 use Cocur\Slugify\Slugify;
+// use Doctrine\Persistence\ObjectManager;
+use App\Repository\FavorisRepository;
 use App\Repository\ProductRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -95,5 +99,53 @@ class IndexController extends AbstractController
         return $this->redirectToRoute('index', [
             'id' => $product->getId($id)
         ]);
+    }
+    /**
+     * Permet de liker ou unliker un article
+     * @Route("/post/{id}/like", name="post_like", requirements={"id":"\d+"})
+     */
+    public function like(Product $product, EntityManagerInterface $manager, FavorisRepository $likeRepo)
+    {
+
+        $user = $this->getUser();
+
+        $favoris = new Favoris();
+        $favoris->setLikes($user->getUserIdentifier());
+
+        if (!$user) return $this->json([
+            'code' => 403,
+            'message' => "Unauthorized",
+        ], 403);
+
+        if ($product->isFavourite($user)) {
+            $like = $likeRepo->findOneBy([
+                'likes' => $favoris,
+                'user' => $user
+            ]);
+            $manager->remove($like->setlikes);
+            $manager->flush();
+
+            return $this->json(
+                [
+                    'code' => 200,
+                    'message' => 'Supprimé des Favoris',
+                    'likeFavoris' => $likeRepo->count(['likes' => $favoris])
+                ],
+                200
+            );
+        }
+        $like = $product->SetFavoris(true, false);
+
+        $manager->persist($like);
+        $manager->flush();
+
+        return $this->json(
+            [
+                'code' => 200,
+                'message' => 'favoris bien ajouté',
+                'likeFavoris' => $likeRepo->count(['likes' => $favoris]),
+                200
+            ]
+        );
     }
 }

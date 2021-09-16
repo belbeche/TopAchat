@@ -39,6 +39,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $password;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Favoris::class, inversedBy="User")
+     */
+    private $countLikes;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -126,5 +131,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getCountLikes(): ?Favoris
+    {
+        return $this->countLikes;
+    }
+
+    public function setCountLikes(?Favoris $countLikes): self
+    {
+        $this->countLikes = $countLikes;
+
+        return $this;
     }
 }

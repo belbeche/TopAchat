@@ -16,7 +16,7 @@ class ProductsFixtures extends Fixture
 
         $product = array();
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             $product[$i] = new Product();
             $category = new Category();
             $product[$i]->setName($faker->name);
@@ -26,7 +26,7 @@ class ProductsFixtures extends Fixture
             $product[$i]->setCommentaires($faker->realText);
             $product[$i]->setManuel($faker->boolean);
             $product[$i]->setCategory($category);
-            $product[$i]->setFilename($faker->imageUrl);
+            $product[$i]->setThumbnail('https://picsum.photos/200/300.jpg');
             $category->setName($faker->name);
             $product[$i]->setLieu($faker->name);
             $product[$i]->setUpdatedAt(new \DateTimeImmutable());
